@@ -24,9 +24,21 @@ async function handleGenerator(req, res) {
   }
 }
 
-async function handleGETGenerator(req, res) {
-  const shortId = req.params.shortId;
-  const result = await URL.findOneAndUpdate({ shortId });
+async function handleGETAnalytics(req, res) {
+  const shortId = req.params.shortId; // Corrected to match the route parameter name
+  try {
+    const result = await URL.findOne({ shortId }); // Use findOne, not findOneAndUpdate, as you're not updating anything
+    if (!result) {
+      return res.status(404).json({ err: "Short URL not found" });
+    }
+    return res.json({
+      totalClicks: result.visitHistory.length,
+      analytics: result.visitHistory,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: "Failed to fetch analytics" });
+  }
 }
 
-module.exports = { handleGenerator };
+module.exports = { handleGenerator, handleGETAnalytics };
