@@ -8,4 +8,5 @@ controller
 routes
 connects
 index.ja
+![Logo](/image/image1.png)
 ![Logo](/image/image.png)

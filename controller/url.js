@@ -1,4 +1,4 @@
-const shortid = require("shortid"); // Ensure you use this library correctly
+const shortid = require("shortid");
 const URL = require("../models/url");
 
 async function handleGenerator(req, res) {
@@ -16,8 +16,8 @@ async function handleGenerator(req, res) {
       redirecturl: body.url,
       visitHistory: [],
     });
-
-    return res.json({ id: shortID });
+    //rendering too home page directly as o/p avaliable
+    return res.render("home", { id: shortID });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ err: "Failed to create URL entry" });
@@ -25,9 +25,9 @@ async function handleGenerator(req, res) {
 }
 
 async function handleGETAnalytics(req, res) {
-  const shortId = req.params.shortId; // Corrected to match the route parameter name
+  const shortId = req.params.shortid;
   try {
-    const result = await URL.findOne({ shortId }); // Use findOne, not findOneAndUpdate, as you're not updating anything
+    const result = await URL.findOne({ shortId });
     if (!result) {
       return res.status(404).json({ err: "Short URL not found" });
     }

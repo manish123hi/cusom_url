@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: aquamarine;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1>UURL SHORTNER</h1>
+    <% if (locals.id){%>
+    <p>Generated url is http://localhost:5000/<%= id%></p>
+    <%}%>
+    <div>
+      <form method="post" action="/url">
+        <label><h1>enter your URL here</h1></label>
+        <input type="text" name="url" placeholder="https//www.manish.com" />
+        <button type="submit">Generate</button>
+      </form>
+    </div>
+    <div>
+      <% if (locals.url && locals.url.length > 0) { %>
+      <table>
+        <thead>
+          <th>S.N</th>
+          <th>shortid</th>
+          <th>redirect</th>
+          <th>clicks</th>
+        </thead>
+        <tbody>
+          <% url.forEach((url, index) => { %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td><%= url.shortId %></td>
+            <td><%= url.redirecturl %></td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <p>No URLs found.</p>
+      <% } %>
+    </div>
+  </body>
+</html>

@@ -1,16 +1,27 @@
 const express = require("express");
 const urlRoute = require("./routes/url");
 const { coonectToMongodb } = require("./connect");
+const stasticRoute = require("./routes/stasticRoute");
 const URL = require("./models/url");
-
+const path = require("path");
 const app = express();
 const PORT = 5000;
+
 coonectToMongodb("mongodb://localhost:27017/short-url").then(() => {
   console.log("mongo is connected");
 });
-app.use(express.json());
-app.use("/url", urlRoute);
 
+// set the view engine to ejs
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/url", urlRoute);
+//s
+app.use("/", stasticRoute);
+
+///
 app.get("/:shortId", async (req, res) => {
   try {
     const shortId = req.params.shortId;
