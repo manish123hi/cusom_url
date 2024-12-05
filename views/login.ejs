@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: aquamarine;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Login page</h1>
+    <form action="/user/login" method="post">
+      <div>
+        <label
+          >email
+          <input type="email" name="email" type="unique" required />
+        </label>
+        <label
+          >password
+          <input type="password" name="password" required />
+        </label>
+        <button type="submit">login</button>
+      </div>
+    </form>
+  </body>
+</html>

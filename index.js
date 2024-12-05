@@ -1,11 +1,17 @@
 const express = require("express");
 const urlRoute = require("./routes/url");
 const { coonectToMongodb } = require("./connect");
-const stasticRoute = require("./routes/stasticRoute");
-const URL = require("./models/url");
+const cookieParser = require("cookie-parser");
+const { restrictToLoginUserOnly } = require("./middleware/auth");
+
 const path = require("path");
 const app = express();
 const PORT = 5000;
+
+const stasticRoute = require("./routes/stasticRoute");
+const URL = require("./models/url");
+
+const userRoute = require("./routes/user");
 
 coonectToMongodb("mongodb://localhost:27017/short-url").then(() => {
   console.log("mongo is connected");
@@ -17,8 +23,10 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/url", urlRoute);
-//s
+app.use(cookieParser());
+///
+app.use("/user", userRoute);
+app.use("/url", restrictToLoginUserOnly, urlRoute); //must need to logined before geeting into generating cookies
 app.use("/", stasticRoute);
 
 ///
